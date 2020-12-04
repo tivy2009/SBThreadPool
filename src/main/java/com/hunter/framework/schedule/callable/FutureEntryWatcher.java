@@ -32,6 +32,10 @@ public class FutureEntryWatcher implements ApplicationRunner {
         futureList.remove(futureEntry);
     }
 
+    public void removeAll(List<FutureEntry> futureEntryList){
+        futureList.removeAll(futureEntryList);
+    }
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         executorService.execute(() -> {
@@ -60,9 +64,7 @@ public class FutureEntryWatcher implements ApplicationRunner {
                     }else{
                         logger.debug("Thread watch list is empty.");
                     }
-                    for(FutureEntry futureEntry: removeFutureList){
-                        remove(futureEntry);
-                    }
+                    removeAll(removeFutureList);
                 }catch (Exception e){
                     e.printStackTrace();
                     try{
