@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:text="${title}">Google身份认证管理界面</title>
+</head>
+<body>
+<h1>账号列表</h1>
+<p style="color: red" th:text="${error}" th:if="${not #strings.isEmpty(error)} "></p>
+<p style="color: blue" th:text="${msg}" th:if="${not #strings.isEmpty(msg)} "></p>
+<hr/>
+<p><label><a th:href="@{/insert}">添加新账号</a></label></p>
+
+<table border="1">
+    <tr>
+        <th>账号</th>
+        <th>应用</th>
+        <th>状态</th>
+        <th>创建时间</th>
+        <th>修改时间</th>
+        <th>Google验证码</th>
+    </tr>
+    <tr th:each = "item,itemStat : ${list}" >
+        <td th:text="${item.account}"></td>
+        <td th:text="${item.issuer}"></td>
+        <th th:text="${item.status}"></th>
+        <th th:text="${#dates.format(item.createtime,'yyyy-MM-dd HH:mm:ss')}"></th>
+        <th th:text="${#dates.format(item.updatetime,'yyyy-MM-dd HH:mm:ss')}"></th>
+        <th>
+            <a th:href="@{/qrCode/{id}(id=${item.id})}">二维码</a>
+            <a href="javascript:void(0)" th:onclick="googleSecret([[${item.id}]]);">验证Code</a>
+        </th>
+    </tr>
+</table>
+
+</body>
+<script language="javascript" type="text/javascript">
+function googleSecret(id){
+        var code = prompt("请输入Google身份验证器显示的验证码","");
+        if(code){
+            if(code != code.replace(/\D/g,'')){
+                alert("请输入合法的数字验证码!");
+                return ;
+            }
+
+            // 创建XHR对象
+            var xhr = new XMLHttpRequest();
+
+            // 先为XHR对象绑定事件，监听readyState属性变化，也即监听请求/响应的活动过程
+            xhr.addEventListener("readystatechange", () => {
+                // 如果readyState属性等于4，表示已经接收到全部响应数据
+                if(xhr.readyState === 4){
+                    // 如果请求成功和重定向就打印响应数据，如果给出错误提示
+                    if((xhr.status === 200) || xhr.status === 304){
+                        alert(xhr.responseText);
+                    }else{
+                        alert("Request was unsuccessful: " + xhr.status);
+                    }
+                }
+            });
+
+            // 启动一个GET请求，并没有发送
+            xhr.open("get", "/checkCode/"+id+"/"+code, true);
+
+            // 发送请求
+            xhr.send(null);
+        }
+
+}
+
+</script>
+</html>

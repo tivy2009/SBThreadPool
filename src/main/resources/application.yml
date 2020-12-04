@@ -1,0 +1,44 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/googleauth?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: 123456
+    initialSize: 3
+    maxActive: 100
+    minIdle: 10
+    maxWait: 50000
+  profiles:
+    #dev(info) or prod(error)
+    active: prod
+
+  jackson:
+    default-property-inclusion: ALWAYS
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 300MB
+
+#\u914D\u7F6EMyBatis
+mybatis:
+  type-aliases-package: com.hunter.framework.schedule.pojo
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/*Mapper.xml
+
+# pagehelper
+pagehelper:
+  helperDialect: mysql
+  #分页合理化参数控制，true:超过最大页码，返回最后一页内容, false:超过最大页码，不返回内容
+  reasonable: false
+  supportMethodsArguments: true
+  params: count=countSql
+
+# 打印sql
+logging:
+  level:
+    com.hunter.framework.googleauthenticator.mapper: debug
