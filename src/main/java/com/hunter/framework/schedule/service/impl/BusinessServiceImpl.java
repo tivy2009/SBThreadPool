@@ -1,17 +1,19 @@
-package com.hunter.framework.schedule.service;
+package com.hunter.framework.schedule.service.impl;
 
 import com.hunter.framework.schedule.callable.CommonCallableParam;
+import com.hunter.framework.schedule.service.IBusinessService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import java.util.Map;
 
-@Component
-public class BusinessService {
+@Service
+public class BusinessServiceImpl implements IBusinessService {
 
-    private  final Logger logger = LoggerFactory.getLogger(BusinessService.class);
+    private  final Logger logger = LoggerFactory.getLogger(BusinessServiceImpl.class);
 
-    public String test(CommonCallableParam callableParam){
+    public String executeTask(CommonCallableParam callableParam){
         logger.info("BuinessService test threadName:{}",Thread.currentThread().getName());
         //获取任务参数
         logger.info("params:{}",callableParam);

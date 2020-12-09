@@ -27,6 +27,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'commons-codec:commons-codec:1.15'
 	implementation 'com.google.zxing:javase:3.3.0'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 test {

@@ -24,6 +24,16 @@ spring:
       max-file-size: 50MB
       max-request-size: 300MB
 
+  mail:
+    host: mail.test.cn
+    username: test
+    properties:
+      mail:
+        smtp:
+          auth: false
+    from: test@test.cn
+    default-encoding: utf-8
+
 #\u914D\u7F6EMyBatis
 mybatis:
   type-aliases-package: com.hunter.framework.schedule.pojo
